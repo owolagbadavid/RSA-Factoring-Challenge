@@ -13,7 +13,7 @@ def get_primes(args):
     prime1 = int(args[1])
     num = args[0].replace(':', '=')
 
-    prime1, prime2 = sorted([prime1, prime2])
+    prime2, prime1 = sorted([prime1, prime2])
 
     return f"{num}{prime1}*{prime2}"
 
