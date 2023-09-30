@@ -5,10 +5,7 @@ import subprocess
 
 
 def get_primes(args):
-    if len(args) != 3:
-        prime2 = math.prod(int(a) for a in args[2:])
-    else:
-        prime2 = int(args[2])
+    prime2 = int(args[2])
 
     prime1 = int(args[1])
     num = args[0].replace(':', '=')
