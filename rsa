@@ -1,27 +1,13 @@
 #!/usr/bin/python3
-import math
 import sys
 import subprocess
 
 
-def get_primes(args):
-    prime2 = int(args[2])
-
-    prime1 = int(args[1])
-    num = args[0].replace(':', '=')
-
-    prime2, prime1 = sorted([prime1, prime2])
-
-    return f"{num}{prime1}*{prime2}"
-
-
-if len(sys.argv) != 2:
-    print('Usage: factors <file>')
-    sys.exit(1)
-
 with open(sys.argv[1], 'r') as file:
     numbers = file.read().splitlines()
-    for number in numbers:
-        result = subprocess.run(['factor', number], capture_output=True, text=True)
-        output = result.stdout.strip().split(' ')
-        print(get_primes(output))
+for number in numbers:
+    result = subprocess.run(['factor', number], capture_output=True, text=True)
+    factors = result.stdout.strip().split()[1:]
+    factors_str = '*'.join(factors)
+    output = f"{number}={factors_str}"
+    print(output)
