@@ -1,13 +1,8 @@
-#!/usr/bin/python3
-import sys
-import subprocess
+#!/bin/bash
 
+filename=$1
 
-with open(sys.argv[1], 'r') as file:
-    numbers = file.read().splitlines()
-for number in numbers:
-    result = subprocess.run(['factor', number], capture_output=True, text=True)
-    factors = result.stdout.strip().split()[1:]
-    factors_str = '*'.join(factors)
-    output = f"{number}={factors_str}"
-    print(output)
+while read -r number; do
+    factors=$(factor "$number" | awk '{ for(i=2;i<=NF;i++) { printf "%s%s",sep,$i; sep="*"} printf "\n" }')
+    echo "$number=$factors"
+done < "$filename"
