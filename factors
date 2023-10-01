@@ -18,10 +18,6 @@ def get_primes(args):
     return f"{num}{prime1}*{prime2}"
 
 
-if len(sys.argv) != 2:
-    print('Usage: factors <file>')
-    sys.exit(1)
-
 with open(sys.argv[1], 'r') as file:
     numbers = file.read().splitlines()
     for number in numbers:
