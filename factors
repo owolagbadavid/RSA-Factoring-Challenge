@@ -1,26 +1,24 @@
-#!/usr/bin/python3
-import math
-import sys
-import subprocess
+#!/bin/bash
 
+filename=$1
 
-def get_primes(args):
-    if len(args) != 3:
-        prime2 = math.prod(int(a) for a in args[2:])
-    else:
-        prime2 = int(args[2])
+get_primes() {
+    local args=("$@")
+    local len=${#args[@]}
 
-    prime1 = int(args[1])
-    num = args[0].replace(':', '=')
+    local num=${args[0]//:/'='}
+    local primes=("${args[@]:2}")
 
-    prime2, prime1 = sorted([prime1, prime2])
+    IFS="*"
+    local factors="${primes[*]}"
+    IFS=" "
 
-    return f"{num}{prime1}*{prime2}"
+    echo "$num$factors"
+}
 
+while read -r number; do
+    output=$(factor "$number")
+    read -ra factors <<< "$output"
+    echo "$(get_primes "${factors[@]}")"
+done < "$filename"
 
-with open(sys.argv[1], 'r') as file:
-    numbers = file.read().splitlines()
-    for number in numbers:
-        result = subprocess.run(['factor', number], capture_output=True, text=True)
-        output = result.stdout.strip().split(' ')
-        print(get_primes(output))
